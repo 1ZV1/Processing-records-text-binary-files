@@ -5,16 +5,6 @@
 #include <string>
 #include <sstream>
 
-void CheckInputFile(std::ifstream& fin);
-
-void CheckOutputFile(std::ofstream& fout);
-
-int CountStudents(std::string nameIn);
-
-void WriteStudent(std::ofstream& binFile, const Student& student);
-
-void TextToBin(std::string nameIn, std::string nameOut);
-
 struct Student
 {
     int id;
@@ -25,13 +15,28 @@ struct Student
 
 struct StudentCard
 {
-    int groop{};
-    int cardNum{};
-    std::string firstSubject {"MA"};
-    int firstMark{};
-    std::string secondSubject {"GEO"};
-    int secondMark{};
-    std::string thirdSubject {"PROG"};
-    int thirdMark{};
+    int groop;
+    int id;
+    std::string firstSubject;
+    int firstMark;
+    std::string secondSubject;
+    int secondMark;
+    std::string thirdSubject;
+    int thirdMark;
 };
+
+void CheckInputFile(std::ifstream& fin);
+
+void CheckOutputFile(std::ofstream& fout);
+
+int CountStudents(std::string nameIn);
+
+void WriteStudent(std::ofstream& binFile, const Student& student);
+
+void TextToBinStruct(std::string nameIn, std::string nameOut);
+
+void WriteStudentCard(std::ofstream& binFile, const StudentCard& studentCard);
+
+void TextToBinStudentsCards(std::string nameIn, std::string nameOut);
+
 #endif
