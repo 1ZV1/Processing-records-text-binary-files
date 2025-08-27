@@ -1,26 +1,37 @@
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<cstdlib>
-
-template <typename T>
-T* CreateArray(int32_t sizeArr);
+#ifndef FUNCTION_H
+#define FUNCTION_H
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 void CheckInputFile(std::ifstream& fin);
 
 void CheckOutputFile(std::ofstream& fout);
 
-template<typename T>
-size_t CountFile(std::ifstream& fin);
+int CountStudents(std::string nameIn);
 
-template<typename T>
-void FillArr(std::ifstream& fin, T* arr, size_t sizeArr);
+void WriteStudent(std::ofstream& binFile, const Student& student);
 
-template<typename T>
-void FileOutputArr(std::ostream& fout, T* arr, size_t sizeArr);
+void TextToBin(std::string nameIn, std::string nameOut);
 
-void TextToBinaryFile(std::ifstream& finText, std::string& foutBin);
+struct Student
+{
+    int id;
+    std::string surname;
+    std::string name;
+    std::string patronymic;
+};
 
+struct StudentCard
+{
+    int groop{};
+    int cardNum{};
+    std::string firstSubject {"MA"};
+    int firstMark{};
+    std::string secondSubject {"GEO"};
+    int secondMark{};
+    std::string thirdSubject {"PROG"};
+    int thirdMark{};
+};
 #endif
