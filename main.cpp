@@ -2,15 +2,6 @@
 
 int main()
 {
-    std::ifstream fin("students.txt");
-    try
-    {
-        CheckInputFile(fin);
-        fin.close();
-    }
-    catch(const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    TextToBin("students.txt", "students.bin");
     return 0;
 }

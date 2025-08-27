@@ -1,33 +1,22 @@
 #include"function.h"
 
-template <typename T>
-T* CreateArray(int32_t sizeArr)
-{
-    if (sizeArr <= 0)
-    {
-        throw std::invalid_argument("Size of the array must be large than zero.");
-    }
-    T* array = new T[sizeArr] {};
-    return array;
-}
-
 void CheckInputFile(std::ifstream& fin)
 {
     if(!fin.is_open())
     {
-        throw "Binary file couldn't be opened!\n";
+        throw std::runtime_error("Binary file couldn't be opened!");
     }
     if(fin.fail())
     {
-        throw "Input binary file error!\n";
+        throw std::runtime_error("Input binary file error!");
     }
     if(fin.bad())
     {
-        throw "Critical error with binary file!\n";
+        throw std::runtime_error("Critical error with binary file!");
     }
     if(fin.peek() == EOF)
     {
-        throw "Binary file is empty!\n";
+        throw std::runtime_error("Binary file is empty!");
     }
 }
 
@@ -35,52 +24,129 @@ void CheckOutputFile(std::ofstream& fout)
 {
     if(!fout.is_open())
     {
-        throw "Binary file couldn't be opened for writing!\n";
+        throw std::runtime_error("Binary file couldn't be opened for writing!");
     }
     if(fout.fail())
     {
-        throw "Output binary file error!\n";
+        throw std::runtime_error("Output binary file error!");
     }
     if(fout.bad())
     {
-        throw "Critical error with output binary file!\n";
+        throw std::runtime_error("Critical error with output binary file!");
     }
 }
 
-template<typename T>
-size_t CountFile(std::ifstream& fin)
+int CountStudents(std::string nameIn)
 {
-    size_t counter{};
-    T num{};
-    while (fin >> num)
+    std::ifstream textFile(nameIn);
+    CheckInputFile(textFile);
+
+    int count = 0;
+    std::string line;
+    while (std::getline(textFile, line))
     {
-        ++counter;
+        if (!line.empty() && line.find(';') != std::string::npos)
+        {
+            count++;
+        }
     }
-    return counter;
+
+    textFile.close();
+    return count;
 }
 
-template<typename T>
-void FillArr(std::ifstream& fin, T* arr, size_t sizeArr)
+Student* ReadStudentsFromText(std::string nameIn, int& size)
 {
-    fin.clear();
-    fin.seekg(0);
-    for(size_t i{}; i < sizeArr; ++i)
+    size = CountStudents(nameIn);
+    if (size == 0) {
+        return nullptr;
+    }
+
+    std::ifstream textFile(nameIn);
+    CheckInputFile(textFile);
+
+    Student* students = new Student[size];
+    std::string line;
+    int index = 0;
+
+    while (std::getline(textFile, line) && index < size)
+        {
+        if (line.empty() || line.find(';') == std::string::npos)
+        {
+            continue;
+        }
+        size_t pos{};
+        int field{};
+        std::string token;
+
+        while ((pos = line.find(';')) != std::string::npos)
+        {
+            token = line.substr(0, pos);
+            switch (field)
+            {
+                case 0:
+                    students[index].id = std::stoi(token);
+                    break;
+                case 1:
+                    students[index].surname = token;
+                    break;
+                case 2:
+                    students[index].name = token;
+                    break;
+            }
+
+            line.erase(0, pos + 1);
+            field++;
+        }
+        if (field == 3)
+        {
+            students[index].patronymic = line;
+        }
+
+        index++;
+    }
+
+    textFile.close();
+    return students;
+}
+
+void WriteStudent(std::ofstream& binFile, const Student& student)
+{
+    binFile.write((char*)(&student.id), sizeof(student.id));
+
+    size_t surnameLength = student.surname.size();
+    binFile.write((char*)(&surnameLength), sizeof(surnameLength));
+    binFile.write(student.surname.c_str(), surnameLength);
+
+    size_t nameLength = student.name.size();
+    binFile.write((char*)(&nameLength), sizeof(nameLength));
+    binFile.write(student.name.c_str(), nameLength);
+
+    size_t patronymicLength = student.patronymic.size();
+    binFile.write((char*)(&patronymicLength), sizeof(patronymicLength));
+    binFile.write(student.patronymic.c_str(), patronymicLength);
+}
+
+void TextToBin(std::string nameIn, std::string nameOut)
+{
+    int size;
+    Student* students = ReadStudentsFromText(nameIn, size);
+
+    if (students == nullptr)
     {
-        fin >> arr[i];
+        std::cout << "No students found in the text file." << std::endl;
+        return;
     }
-}
 
-template<typename T>
-void FileOutputArr(std::ostream& fout, T* arr, size_t sizeArr)
-{
-    for(size_t i{}; i < sizeArr; ++i)
+    std::ofstream binFile(nameOut, std::ios::binary);
+    CheckOutputFile(binFile);
+
+    binFile.write((char*)(&size), sizeof(size));
+    for (int i = 0; i < size; ++i)
     {
-        fout << arr[i] << ' ';
+        WriteStudent(binFile, students[i]);
     }
-    fout <<'\n';
-}
 
-void TextToBinaryFile(std::ifstream& finText, std::string& foutBin)
-{
-
+    binFile.close();
+    delete[] students;
 }
