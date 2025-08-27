@@ -126,16 +126,16 @@ void WriteStudent(std::ofstream& binFile, const Student& student)
     binFile.write(student.patronymic.c_str(), patronymicLength);
 }
 
-void TextToBinStruct(std::string nameIn, std::string nameOut)
+Student* TextToBinStruct(std::string nameIn, std::string nameOut)
 {
     int size;
     Student* students = ReadStudentsFromText(nameIn, size);
 
-    if (students == nullptr)
-    {
-        std::cout << "No students found in the text file!" << '\n';
-        return;
-    }
+    // if (students == nullptr)
+    // {
+    //     std::cout << "No students found in the text file!" << '\n';
+    //     return;
+    // }
 
     std::ofstream binFile(nameOut, std::ios::binary);
     CheckOutputFile(binFile);
@@ -146,7 +146,7 @@ void TextToBinStruct(std::string nameIn, std::string nameOut)
         WriteStudent(binFile, students[i]);
     }
     binFile.close();
-    delete[] students;
+    return students;
 }
 
 StudentCard* ReadStudentsCardFromText(std::string nameIn, int& size)
@@ -242,16 +242,16 @@ void WriteStudentCard(std::ofstream& binFile, const StudentCard& studentCard)
     binFile.write((char*)(&studentCard.thirdMark), sizeof(studentCard.thirdMark));
 }
 
-void TextToBinStudentsCards(std::string nameIn, std::string nameOut)
+StudentCard* TextToBinStudentsCards(std::string nameIn, std::string nameOut)
 {
     int size;
     StudentCard* studentsCards = ReadStudentsCardFromText(nameIn, size);
 
-    if (studentsCards == nullptr)
-    {
-        std::cout << "No one student card!" << '\n';
-        return;
-    }
+    // if (studentsCards == nullptr)
+    // {
+    //     std::cout << "No one student card!" << '\n';
+    //     return;
+    // }
 
     std::ofstream binFile(nameOut, std::ios::binary);
     CheckOutputFile(binFile);
@@ -263,5 +263,5 @@ void TextToBinStudentsCards(std::string nameIn, std::string nameOut)
     }
 
     binFile.close();
-    delete[] studentsCards;
+    return studentsCards;
 }

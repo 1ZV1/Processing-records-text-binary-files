@@ -33,10 +33,9 @@ int CountStudents(std::string nameIn);
 
 void WriteStudent(std::ofstream& binFile, const Student& student);
 
-void TextToBinStruct(std::string nameIn, std::string nameOut);
-
 void WriteStudentCard(std::ofstream& binFile, const StudentCard& studentCard);
 
-void TextToBinStudentsCards(std::string nameIn, std::string nameOut);
+StudentCard* TextToBinStudentsCards(std::string nameIn, std::string nameOut);
 
+Student* TextToBinStruct(std::string nameIn, std::string nameOut);
 #endif
