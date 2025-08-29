@@ -21,6 +21,11 @@ int main()
         }
 
         int cardSize = countStudentsInTextFile("students-marks.txt");
+        if(studentSize != cardSize)
+        {
+            std::cout << "The number of students and cards does not coincide!";
+            return 1;
+        }
         StudentCard* studentsCards = new StudentCard[cardSize];
         BinToStudentCard(studentsCards, cardSize, "students-mark.bin");
 
@@ -37,32 +42,32 @@ int main()
         }
 
         int size = studentSize;
-        B(students, studentsCards, size, "b.bin");
-        binaryToAsciiText("b.bin", "b.txt");
+        TaskB(students, studentsCards, size, "b.bin");
+        binaryToAsciiText("task-b.bin", "task-b.txt");
 
-        C(students, studentsCards, size, "c.bin");
-        binaryToAsciiText("c.bin", "c.txt");
+        TaskC(students, studentsCards, size, "c.bin");
+        binaryToAsciiText("task-c.bin", "task-c.txt");
 
-        D(students, studentsCards, size, "d.bin");
-        binaryToAsciiText("d.bin", "d.txt");
+        TaskD(students, studentsCards, size, "task-d.bin");
+        binaryToAsciiText("task-d.bin", "task-d.txt");
 
-        E(students, studentsCards, size, "e.bin");
-        binaryToAsciiText("e.bin", "e.txt");
+        TaskE(students, studentsCards, size, "task-e.bin");
+        binaryToAsciiText("task-e.bin", "task-e.txt");
 
-        F("students.bin", "e.bin", "f.bin");
-        binaryToAsciiText("f.bin", "f.txt");
+        TaskF("students.bin", "e.bin", "task-f.bin");
+        binaryToAsciiText("task-f.bin", "task-f.txt");
 
         int numberGroup{};
         std::cout << "Input Number group: ";
         std::cin >> numberGroup;
-        G(students, studentsCards, size, numberGroup, "g.bin");
-        binaryToAsciiText("g.bin", "g.txt");
+        TaskG(students, studentsCards, size, numberGroup, "g.bin");
+        binaryToAsciiText("task-g.bin", "g.txt");
 
-        H(students, studentsCards, size, "h.bin");
-        binaryToAsciiText("h.bin", "h.txt");
+        TaskH(students, studentsCards, size, "h.bin");
+        binaryToAsciiText("task-h.bin", "h.txt");
 
-        I(students, studentsCards, size, "i.bin");
-        binaryToAsciiText("i.bin", "i.txt");
+        TaskI(students, studentsCards, size, "i.bin");
+        binaryToAsciiText("task-i.bin", "i.txt");
 
         delete[] students;
         delete[] studentsCards;

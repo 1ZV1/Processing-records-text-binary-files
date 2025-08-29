@@ -207,29 +207,29 @@ void textToBinaryStudentsCards(const std::string& textFileName, const std::strin
     std::string line;
     while (std::getline(textFile, line))
     {
-        std::stringstream ss(line);
+        std::stringstream stringstream(line);
         StudentCard studentCard;
         std::string token;
 
-        std::getline(ss, token, ';');
+        std::getline(stringstream, token, ';');
         studentCard.group = std::stoi(token);
 
-        std::getline(ss, token, ';');
+        std::getline(stringstream, token, ';');
         studentCard.id = std::stoi(token);
 
-        std::getline(ss, studentCard.firstSubject, ';');
+        std::getline(stringstream, studentCard.firstSubject, ';');
 
-        std::getline(ss, token, ';');
+        std::getline(stringstream, token, ';');
         studentCard.firstMark = std::stoi(token);
 
-        std::getline(ss, studentCard.secondSubject, ';');
+        std::getline(stringstream, studentCard.secondSubject, ';');
 
-        std::getline(ss, token, ';');
+        std::getline(stringstream, token, ';');
         studentCard.secondMark = std::stoi(token);
 
-        std::getline(ss, studentCard.thirdSubject, ';');
+        std::getline(stringstream, studentCard.thirdSubject, ';');
 
-        std::getline(ss, token, ';');
+        std::getline(stringstream, token, ';');
         studentCard.thirdMark = std::stoi(token);
 
         writeStudentCard(binaryFile, studentCard);
@@ -266,6 +266,10 @@ void binaryToAsciiText(const std::string& binaryFileName, const std::string& tex
         {
             txtFile << byte;
         }
+        if (byte == '\n' || byte == '\r')
+        {
+            txtFile << '\n';
+        }
         count++;
     }
 
@@ -274,7 +278,7 @@ void binaryToAsciiText(const std::string& binaryFileName, const std::string& tex
 }
 
 
-void B (Student* students, StudentCard* studentsCards,int size, const std::string& binaryFileName)
+void TaskB (Student* students, StudentCard* studentsCards,int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
     char Probel = ' ';
@@ -329,7 +333,7 @@ void B (Student* students, StudentCard* studentsCards,int size, const std::strin
 }
 
 
-void C (Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
+void TaskC (Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
     char Probel = ' ';
@@ -355,7 +359,7 @@ void C (Student* students, StudentCard* studentsCards, int size, const std::stri
 }
 
 
-void D (Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
+void TaskD (Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
     char Probel = ' ';
@@ -394,9 +398,9 @@ void D (Student* students, StudentCard* studentsCards, int size, const std::stri
 
 void sortStudents(StudentCard* arr, int n, Student* students )
 {
-    for (int i = 0; i < n - 1; i++)
+    for (int i{}; i < n - 1; i++)
     {
-        for (int j = 0; j < n - 1 - i; j++)
+        for (int j{}; j < n - 1 - i; j++)
         {
             if (arr[j].group > arr[j + 1].group)
             {
@@ -413,7 +417,7 @@ void sortStudents(StudentCard* arr, int n, Student* students )
 }
 
 
-void E(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
+void TaskE(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
     char Probel = ' ';
@@ -452,7 +456,7 @@ void E(Student* students, StudentCard* studentsCards, int size, const std::strin
 }
 
 
-void F( const std::string& binaryFileName, const std::string& binaryFileName2, const std::string& binaryFileName3)
+void TaskF( const std::string& binaryFileName, const std::string& binaryFileName2, const std::string& binaryFileName3)
 {
     std::ifstream binFile(binaryFileName, std::ios::binary);
     std::ifstream binFile2(binaryFileName2, std::ios::binary);
@@ -478,7 +482,7 @@ void F( const std::string& binaryFileName, const std::string& binaryFileName2, c
 }
 
 
-void G(Student* students, StudentCard* studentsCards, int size, int numberGroup, const std::string& binaryFileName)
+void TaskG(Student* students, StudentCard* studentsCards, int size, int numberGroup, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
     char Probel = ' ';
@@ -552,7 +556,7 @@ void StudentCardSort(double arr[], int n, StudentCard* studensCard, Student* stu
 }
 
 
-void H(Student* students, StudentCard* studentsCards, int size,  const std::string& binaryFileName)
+void TaskH(Student* students, StudentCard* studentsCards, int size,  const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
     char Probel = ' ';
@@ -580,7 +584,7 @@ void H(Student* students, StudentCard* studentsCards, int size,  const std::stri
 }
 
 
-void I(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
+void TaskI(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
     char Probel = ' ';

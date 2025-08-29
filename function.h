@@ -8,15 +8,16 @@
 #include <stdexcept>
 #include <cstring>
 
-// Структуры
-struct Student {
+struct Student
+{
     int id;
     std::string surname;
     std::string name;
     std::string patronymic;
 };
 
-struct StudentCard {
+struct StudentCard
+{
     int group;
     int id;
     std::string firstSubject;
@@ -27,7 +28,6 @@ struct StudentCard {
     int thirdMark;
 };
 
-// Объявления функций
 void CheckInputFile(std::ifstream& fin);
 void CheckOutputFile(std::ofstream& fout);
 
@@ -44,15 +44,15 @@ void BinToStudentCard(StudentCard* studentCards, int size, const std::string& bi
 
 void binaryToAsciiText(const std::string& binaryFileName, const std::string& textFileName);
 
-void B(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
-void C(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
-void D(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
+void TaskB(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
+void TaskC(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
+void TaskD(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
 void sortStudents(StudentCard* arr, int n, Student* students);
-void E(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
-void F(const std::string& binaryFileName, const std::string& binaryFileName2, const std::string& binaryFileName3);
-void G(Student* students, StudentCard* studentsCards, int size, int numberGroup, const std::string& binaryFileName);
+void TaskE(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
+void TaskF(const std::string& binaryFileName, const std::string& binaryFileName2, const std::string& binaryFileName3);
+void TaskG(Student* students, StudentCard* studentsCards, int size, int numberGroup, const std::string& binaryFileName);
 void StudentCardSort(double arr[], int n, StudentCard* studentsCard, Student* students);
-void H(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
-void I(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
+void TaskH(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
+void TaskI(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
 
 #endif
