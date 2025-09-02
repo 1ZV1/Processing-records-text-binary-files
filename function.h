@@ -31,18 +31,18 @@ struct StudentCard
 void CheckInputFile(std::ifstream& fin);
 void CheckOutputFile(std::ofstream& fout);
 
-void writeStudent(std::ofstream& fout, const Student& student);
-void readStudent(std::ifstream& fin, Student& student);
-void textToBinaryStudents(const std::string& textFileName, const std::string& binaryFileName);
-int countStudentsInTextFile(const std::string& textFileName);
+void WriteStudent(std::ofstream& fout, const Student& student);
+void ReadStudent(std::ifstream& fin, Student& student);
+void TextToBinaryStudents(const std::string& textFileName, const std::string& binaryFileName);
+int CountStudentsInTextFile(const std::string& textFileName);
 void BinToStudent(Student* students, int size, const std::string& binaryFileName);
 
-void writeStudentCard(std::ofstream& fout, const StudentCard& studentCard);
-void readStudentCard(std::ifstream& fin, StudentCard& studentCard);
-void textToBinaryStudentsCards(const std::string& textFileName, const std::string& binaryFileName);
+void WriteStudentCard(std::ofstream& fout, const StudentCard& studentCard);
+void ReadStudentCard(std::ifstream& fin, StudentCard& studentCard);
+void TextToBinaryStudentsCards(const std::string& textFileName, const std::string& binaryFileName);
 void BinToStudentCard(StudentCard* studentCards, int size, const std::string& binaryFileName);
 
-void binaryToAsciiText(const std::string& binaryFileName, const std::string& textFileName);
+void BinaryToAsciiText(const std::string& binaryFileName, const std::string& textFileName);
 
 void TaskB(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
 void TaskC(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
@@ -54,5 +54,6 @@ void TaskG(Student* students, StudentCard* studentsCards, int size, int numberGr
 void StudentCardSort(double arr[], int n, StudentCard* studentsCard, Student* students);
 void TaskH(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
 void TaskI(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName);
+void PrintBinaryFile(const std::string& fileName);
 
 #endif

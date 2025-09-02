@@ -14,10 +14,6 @@ void CheckInputFile(std::ifstream& fin)
     {
         throw std::runtime_error("Critical error with binary file!");
     }
-    if(fin.peek() == EOF)
-    {
-        throw std::runtime_error("Binary file is empty!");
-    }
 }
 
 void CheckOutputFile(std::ofstream& fout)
@@ -36,7 +32,23 @@ void CheckOutputFile(std::ofstream& fout)
     }
 }
 
-void writeStudent(std::ofstream& fout, const Student& student)
+void CheckTextFile(std::ifstream& fin)
+{
+    if(!fin.is_open())
+    {
+        throw std::runtime_error("Text file couldn't be opened!");
+    }
+    if(fin.fail())
+    {
+        throw std::runtime_error("Input text file error!");
+    }
+    if(fin.bad())
+    {
+        throw std::runtime_error("Critical error with text file!");
+    }
+}
+
+void WriteStudent(std::ofstream& fout, const Student& student)
 {
     fout.write((const char*)(&student.id), sizeof(student.id));
 
@@ -53,7 +65,7 @@ void writeStudent(std::ofstream& fout, const Student& student)
     fout.write(student.patronymic.c_str(), length);
 }
 
-void readStudent(std::ifstream& fin, Student& student)
+void ReadStudent(std::ifstream& fin, Student& student)
 {
     fin.read((char*)(&student.id), sizeof(student.id));
 
@@ -79,10 +91,10 @@ void readStudent(std::ifstream& fin, Student& student)
     delete[] buffer;
 }
 
-void textToBinaryStudents(const std::string& textFileName, const std::string& binaryFileName)
+void TextToBinaryStudents(const std::string& textFileName, const std::string& binaryFileName)
 {
     std::ifstream textFile(textFileName);
-    CheckInputFile(textFile);
+    CheckTextFile(textFile);
 
     std::ofstream binaryFile(binaryFileName, std::ios::binary);
     CheckOutputFile(binaryFile);
@@ -101,17 +113,17 @@ void textToBinaryStudents(const std::string& textFileName, const std::string& bi
         std::getline(stringstream, student.name, ';');
         std::getline(stringstream, student.patronymic, ';');
 
-        writeStudent(binaryFile, student);
+        WriteStudent(binaryFile, student);
     }
 
     textFile.close();
     binaryFile.close();
 }
 
-int countStudentsInTextFile(const std::string& textFileName)
+int CountStudentsInTextFile(const std::string& textFileName)
 {
     std::ifstream file(textFileName);
-    CheckInputFile(file);
+    CheckTextFile(file);
     int count{};
     std::string line;
     while (std::getline(file, line))
@@ -132,13 +144,13 @@ void BinToStudent(Student* students, int size, const std::string& binaryFileName
 
     for (int i{}; i < size; ++i)
     {
-        readStudent(binFile, students[i]);
+        ReadStudent(binFile, students[i]);
     }
 
     binFile.close();
 }
 
-void writeStudentCard(std::ofstream& fout, const StudentCard& studentCard)
+void WriteStudentCard(std::ofstream& fout, const StudentCard& studentCard)
 {
     fout.write((const char*)(&studentCard.group), sizeof(studentCard.group));
 
@@ -161,7 +173,7 @@ void writeStudentCard(std::ofstream& fout, const StudentCard& studentCard)
 
 }
 
-void readStudentCard(std::ifstream& fin, StudentCard& studentCard)
+void ReadStudentCard(std::ifstream& fin, StudentCard& studentCard)
 {
     fin.read((char*)(&studentCard.group), sizeof(studentCard.group));
     fin.read((char*)(&studentCard.id), sizeof(studentCard.id));
@@ -196,10 +208,10 @@ void readStudentCard(std::ifstream& fin, StudentCard& studentCard)
     fin.read((char*)(&studentCard.thirdMark), sizeof(studentCard.thirdMark));
 }
 
-void textToBinaryStudentsCards(const std::string& textFileName, const std::string& binaryFileName)
+void TextToBinaryStudentsCards(const std::string& textFileName, const std::string& binaryFileName)
 {
     std::ifstream textFile(textFileName);
-    CheckInputFile(textFile);
+    CheckTextFile(textFile);
 
     std::ofstream binaryFile(binaryFileName, std::ios::binary);
     CheckOutputFile(binaryFile);
@@ -232,7 +244,7 @@ void textToBinaryStudentsCards(const std::string& textFileName, const std::strin
         std::getline(stringstream, token, ';');
         studentCard.thirdMark = std::stoi(token);
 
-        writeStudentCard(binaryFile, studentCard);
+        WriteStudentCard(binaryFile, studentCard);
     }
 
     textFile.close();
@@ -244,15 +256,15 @@ void BinToStudentCard(StudentCard* studentCards, int size, const std::string& bi
     std::ifstream binFile(binaryFileName, std::ios::binary);
     CheckInputFile(binFile);
 
-    for (int i = 0; i < size; ++i)
+    for (int i{}; i < size; ++i)
     {
-        readStudentCard(binFile, studentCards[i]);
+        ReadStudentCard(binFile, studentCards[i]);
     }
 
     binFile.close();
 }
 
-void binaryToAsciiText(const std::string& binaryFileName, const std::string& textFileName)
+void BinaryToAsciiText(const std::string& binaryFileName, const std::string& textFileName)
 {
     std::ifstream binFile(binaryFileName, std::ios::binary);
     CheckInputFile(binFile);
@@ -281,6 +293,7 @@ void binaryToAsciiText(const std::string& binaryFileName, const std::string& tex
 void TaskB (Student* students, StudentCard* studentsCards,int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     char Probel = ' ';
     for (int i{0}; i < size; i++)
     {
@@ -336,6 +349,7 @@ void TaskB (Student* students, StudentCard* studentsCards,int size, const std::s
 void TaskC (Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     char Probel = ' ';
     for (int i{ 0 }; i < size; i++)
     {
@@ -362,6 +376,7 @@ void TaskC (Student* students, StudentCard* studentsCards, int size, const std::
 void TaskD (Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     char Probel = ' ';
     for (int i{ 0 }; i < size; i++)
     {
@@ -420,8 +435,9 @@ void sortStudents(StudentCard* arr, int n, Student* students )
 void TaskE(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     char Probel = ' ';
-    sortStudents(studentsCards, countStudentsInTextFile("students.txt"), students);
+    sortStudents(studentsCards, CountStudentsInTextFile("students.txt"), students);
     for (int i{ 0 }; i < size; i++)
     {
         double average = (studentsCards[i].firstMark + studentsCards[i].secondMark + studentsCards[i].thirdMark) / 3.0;
@@ -459,9 +475,11 @@ void TaskE(Student* students, StudentCard* studentsCards, int size, const std::s
 void TaskF( const std::string& binaryFileName, const std::string& binaryFileName2, const std::string& binaryFileName3)
 {
     std::ifstream binFile(binaryFileName, std::ios::binary);
+    CheckInputFile(binFile);
     std::ifstream binFile2(binaryFileName2, std::ios::binary);
+    CheckInputFile(binFile2);
     std::ofstream binFile3(binaryFileName3, std::ios::binary);
-
+    CheckOutputFile(binFile3);
     char ch;
     while (binFile.get(ch))
     {
@@ -485,8 +503,9 @@ void TaskF( const std::string& binaryFileName, const std::string& binaryFileName
 void TaskG(Student* students, StudentCard* studentsCards, int size, int numberGroup, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     char Probel = ' ';
-    sortStudents(studentsCards, countStudentsInTextFile("students.txt"), students);
+    sortStudents(studentsCards, CountStudentsInTextFile("students.txt"), students);
     for (int i{0}; i < size; i++)
         if (studentsCards[i].group == numberGroup)
         {
@@ -559,6 +578,7 @@ void StudentCardSort(double arr[], int n, StudentCard* studensCard, Student* stu
 void TaskH(Student* students, StudentCard* studentsCards, int size,  const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     char Probel = ' ';
     double *average = new double[size];
     for(int i{0}; i < size; i++)
@@ -587,6 +607,7 @@ void TaskH(Student* students, StudentCard* studentsCards, int size,  const std::
 void TaskI(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
     std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     char Probel = ' ';
     for (int i{ 0 }; i < size; i++)
     {
@@ -617,4 +638,25 @@ void TaskI(Student* students, StudentCard* studentsCards, int size, const std::s
 
     }
     binFile.close();
+}
+
+void PrintBinaryFile(const std::string& fileName)
+{
+    std::ifstream binFile(fileName, std::ios::binary);
+    CheckInputFile(binFile);
+
+    unsigned char byte;
+    int count{};
+
+    while(binFile.read((char*)&byte, sizeof(byte)))
+    {
+        std::cout << std::hex << std::uppercase << (int)byte << " ";
+        ++count;
+        if (count % 16 == 0)
+        {
+            std::cout << "\n";
+        }
+    }
+
+    std::cout << std::dec << "\n";
 }

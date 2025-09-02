@@ -4,71 +4,75 @@ int main()
 {
     try
     {
-        textToBinaryStudents("students.txt", "students.bin");
-        binaryToAsciiText("students.bin", "studentsOutPut.txt");
-        textToBinaryStudentsCards("students-marks.txt", "students-mark.bin");
-        int studentSize = countStudentsInTextFile("students.txt");
-        Student* students = new Student[studentSize];
-        BinToStudent(students, studentSize, "students.bin");
+        TextToBinaryStudents("students.txt", "students.bin");
+        BinaryToAsciiText("students.bin", "students-output.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
 
-        std::cout << "Students data:\n";
-        for (int i{}; i < studentSize; ++i)
-        {
-            std::cout << "ID: " << students[i].id
-                      << "; Surname: " << students[i].surname
-                      << "; Name: " << students[i].name
-                      << "; Patronymic: " << students[i].patronymic << '\n';
-        }
+        TextToBinaryStudentsCards("students-marks.txt", "students-mark.bin");
+        BinaryToAsciiText("students-mark.bin", "students-mark-output.txt");
+        PrintBinaryFile("students.bin");
 
-        int cardSize = countStudentsInTextFile("students-marks.txt");
-        if(studentSize != cardSize)
+        int studentSize = CountStudentsInTextFile("students.txt");
+        int cardSize = CountStudentsInTextFile("students-marks.txt");
+
+        if (studentSize != cardSize)
         {
             std::cout << "The number of students and cards does not coincide!";
             return 1;
         }
+
+        Student* students = new Student[studentSize];
+        BinToStudent(students, studentSize, "students.bin");
+
         StudentCard* studentsCards = new StudentCard[cardSize];
         BinToStudentCard(studentsCards, cardSize, "students-mark.bin");
 
-        std::cout << "\nStudent Cards data:\n";
-        for (int i{}; i < cardSize; ++i) {
-            std::cout << "Group: " << studentsCards[i].group
-                      << "; ID: " << studentsCards[i].id
-                      << "; First Subject: " << studentsCards[i].firstSubject
-                      << "; First Mark: " << studentsCards[i].firstMark
-                      << "; Second Subject: " << studentsCards[i].secondSubject
-                      << "; Second Mark: " << studentsCards[i].secondMark
-                      << "; Third Subject: " << studentsCards[i].thirdSubject
-                      << "; Third Mark: " << studentsCards[i].thirdMark << '\n';
-        }
-
         int size = studentSize;
-        TaskB(students, studentsCards, size, "b.bin");
-        binaryToAsciiText("task-b.bin", "task-b.txt");
 
-        TaskC(students, studentsCards, size, "c.bin");
-        binaryToAsciiText("task-c.bin", "task-c.txt");
-
+        TaskB(students, studentsCards, size, "task-b.bin");
+        BinaryToAsciiText("task-b.bin", "task-b.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
+        
+        TaskC(students, studentsCards, size, "task-c.bin");
+        BinaryToAsciiText("task-c.bin", "task-c.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
+        
         TaskD(students, studentsCards, size, "task-d.bin");
-        binaryToAsciiText("task-d.bin", "task-d.txt");
-
+        BinaryToAsciiText("task-d.bin", "task-d.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
+        
         TaskE(students, studentsCards, size, "task-e.bin");
-        binaryToAsciiText("task-e.bin", "task-e.txt");
-
-        TaskF("students.bin", "e.bin", "task-f.bin");
-        binaryToAsciiText("task-f.bin", "task-f.txt");
-
+        BinaryToAsciiText("task-e.bin", "task-e.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
+        
+        TaskF("students.bin", "task-e.bin", "task-f.bin");
+        BinaryToAsciiText("task-f.bin", "task-f.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
+        
         int numberGroup{};
-        std::cout << "Input Number group: ";
+        std::cout << "\nInput Number group: ";
         std::cin >> numberGroup;
-        TaskG(students, studentsCards, size, numberGroup, "g.bin");
-        binaryToAsciiText("task-g.bin", "g.txt");
 
-        TaskH(students, studentsCards, size, "h.bin");
-        binaryToAsciiText("task-h.bin", "h.txt");
+        TaskG(students, studentsCards, size, numberGroup, "task-g.bin");
+        BinaryToAsciiText("task-g.bin", "task-g.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
 
-        TaskI(students, studentsCards, size, "i.bin");
-        binaryToAsciiText("task-i.bin", "i.txt");
+        TaskH(students, studentsCards, size, "task-h.bin");
+        BinaryToAsciiText("task-h.bin", "task-h.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
 
+        TaskI(students, studentsCards, size, "task-i.bin");
+        BinaryToAsciiText("task-i.bin", "task-i.txt");
+        std::cout <<"\nPrint .bin file in 16 calculation system:\n";
+        PrintBinaryFile("students.bin");
         delete[] students;
         delete[] studentsCards;
     }
@@ -77,5 +81,6 @@ int main()
         std::cerr << "Error: " << e.what() << '\n';
         return 1;
     }
+
     return 0;
 }
