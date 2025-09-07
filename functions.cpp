@@ -245,7 +245,8 @@ void TaskC(Student* students, StudentCard* studentsCards, int size, const std::s
     for (int i{}; i < size; i++)
     {
         double average = (studentsCards[i].firstMark + studentsCards[i].secondMark + studentsCards[i].thirdMark) / 3.0;
-        std::string line = std::to_string(studentsCards[i].group) + " " + std::to_string(studentsCards[i].id) + " " + students[i].surname + " " + std::to_string(average) + "\n";
+        std::string line = std::to_string(studentsCards[i].group) + " " + std::to_string(studentsCards[i].id)
+        + " " + students[i].surname + " " + std::to_string(average) + "\n";
         binFile.write(line.c_str(), line.size());
     }
 }

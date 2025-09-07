@@ -4,12 +4,6 @@ int main()
 {
     try
     {
-        TextToBinaryStudents("students.txt", "students.bin");
-        StudentsBinToTxt("students.bin", "students-output.txt");
-
-        TextToBinaryStudentsCards("students-marks.txt", "students-mark.bin");
-        StudentCardsBinToTxt("students-mark.bin", "students-mark-output.txt");
-
         int studentSize = CountStudentsInTextFile("students.txt");
         int cardSize = CountStudentsInTextFile("students-marks.txt");
 
@@ -18,6 +12,11 @@ int main()
             std::cout << "The number of students and cards does not coincide!\n";
             return 1;
         }
+        TextToBinaryStudents("students.txt", "students.bin");
+        StudentsBinToTxt("students.bin", "students-output.txt");
+
+        TextToBinaryStudentsCards("students-marks.txt", "students-mark.bin");
+        StudentCardsBinToTxt("students-mark.bin", "students-mark-output.txt");
 
         Student* students = new Student[studentSize];
         BinToStudent(students, studentSize, "students.bin");
@@ -29,7 +28,6 @@ int main()
 
         TaskB(students, studentsCards, size, "task-b.bin");
         TaskBToTxt("task-b.bin", "task-b.txt");
-        TaskBToTxt("task-b.bin","task-b-output.txt");
 
         TaskC(students, studentsCards, size, "task-c.bin");
         TaskCToTxt("task-c.bin", "task-c.txt");
