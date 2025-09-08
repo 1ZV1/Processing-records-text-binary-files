@@ -65,30 +65,29 @@ void WriteStudent(std::ofstream& fout, const Student& student)
 void ReadStudent(std::ifstream& fin, Student& student)
 {
     fin.read((char*)(&student.id), sizeof(student.id));
+
     int length;
     char* buffer;
-    
+
     fin.read((char*)(&length), sizeof(length));
-    
     buffer = new char[length];
     fin.read(buffer, length);
-    student.surname.assign(buffer, length);
+    student.surname = std::string(buffer, length);
     delete[] buffer;
-    
+
     fin.read((char*)(&length), sizeof(length));
-    
     buffer = new char[length];
     fin.read(buffer, length);
-    student.name.assign(buffer, length);
+    student.name = std::string(buffer, length);
     delete[] buffer;
-    
+
     fin.read((char*)(&length), sizeof(length));
-    
     buffer = new char[length];
     fin.read(buffer, length);
-    student.patronymic.assign(buffer, length);
+    student.patronymic = std::string(buffer, length);
     delete[] buffer;
 }
+
 
 void TextToBinaryStudents(const std::string& textFileName, const std::string& binaryFileName)
 {
