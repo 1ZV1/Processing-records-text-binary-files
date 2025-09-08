@@ -114,7 +114,8 @@ int CountStudentsInTextFile(const std::string& textFileName)
 
 void BinToStudent(Student* students, int size, const std::string& binaryFileName)
 {
-    std::ifstream binFile(binaryFileName, std::ios::binary); CheckInputFile(binFile);
+    std::ifstream binFile(binaryFileName, std::ios::binary);
+    CheckInputFile(binFile);
     for(int i{}; i < size ; ++i)
     {
         ReadStudent(binFile, students[i]);
@@ -123,8 +124,10 @@ void BinToStudent(Student* students, int size, const std::string& binaryFileName
 
 void StudentsBinToTxt(const std::string& binFileName, const std::string& txtFileName)
 {
-    std::ifstream binFile(binFileName, std::ios::binary); CheckInputFile(binFile);
-    std::ofstream txtFile(txtFileName); CheckOutputFile(txtFile);
+    std::ifstream binFile(binFileName, std::ios::binary);
+    CheckInputFile(binFile);
+    std::ofstream txtFile(txtFileName);
+    CheckOutputFile(txtFile);
     Student student;
     while(binFile.peek()!=EOF)
     {
@@ -155,15 +158,32 @@ void ReadStudentCard(std::ifstream& fin, StudentCard& studentCard)
 {
     fin.read((char*)(&studentCard.group), sizeof(studentCard.group));
     fin.read((char*)(&studentCard.id), sizeof(studentCard.id));
-    int length; char* buffer;
+
+    int length;
+    char* buffer;
+
     fin.read((char*)(&length), sizeof(length));
-    buffer=new char[length]; fin.read(buffer,length); studentCard.firstSubject.assign(buffer,length); delete[] buffer;
+    buffer = new char[length];
+    fin.read(buffer, length);
+    studentCard.firstSubject = std::string(buffer, length);
+    delete[] buffer;
+
     fin.read((char*)(&studentCard.firstMark), sizeof(studentCard.firstMark));
+
     fin.read((char*)(&length), sizeof(length));
-    buffer=new char[length]; fin.read(buffer,length); studentCard.secondSubject.assign(buffer,length); delete[] buffer;
+    buffer = new char[length];
+    fin.read(buffer, length);
+    studentCard.secondSubject = std::string(buffer, length);
+    delete[] buffer;
+
     fin.read((char*)(&studentCard.secondMark), sizeof(studentCard.secondMark));
+
     fin.read((char*)(&length), sizeof(length));
-    buffer=new char[length]; fin.read(buffer,length); studentCard.thirdSubject.assign(buffer,length); delete[] buffer;
+    buffer = new char[length];
+    fin.read(buffer, length);
+    studentCard.thirdSubject = std::string(buffer, length);
+    delete[] buffer;
+
     fin.read((char*)(&studentCard.thirdMark), sizeof(studentCard.thirdMark));
 }
 
@@ -386,9 +406,9 @@ void TaskF(const std::string& beforeSortBin, const std::string& afterSortBin, co
     CheckOutputFile(txtFile);
     std::ifstream binFileAfterSort(afterSortBin,std::ios::binary);
     CheckOutputFile(txtFile);
-    txtFile << "Неуспевающие (до сортировки):\n";
+    txtFile << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ):\n";
     TaskDToTxtMod(binFileBeforeSort, txtFile); 
-    txtFile << "\nНеуспевающие (после сортировки):\n";
+    txtFile << "\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ):\n";
     TaskEToTxtMod(binFileAfterSort, txtFile);
 }
 
