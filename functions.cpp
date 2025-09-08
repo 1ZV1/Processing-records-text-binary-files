@@ -65,22 +65,37 @@ void WriteStudent(std::ofstream& fout, const Student& student)
 void ReadStudent(std::ifstream& fin, Student& student)
 {
     fin.read((char*)(&student.id), sizeof(student.id));
-    int length; char* buffer;
+    int length;
+    char* buffer;
+    
     fin.read((char*)(&length), sizeof(length));
-    buffer = new char[length]; fin.read(buffer, length);
-    student.surname.assign(buffer, length); delete[] buffer;
+    
+    buffer = new char[length];
+    fin.read(buffer, length);
+    student.surname.assign(buffer, length);
+    delete[] buffer;
+    
     fin.read((char*)(&length), sizeof(length));
-    buffer = new char[length]; fin.read(buffer, length);
-    student.name.assign(buffer, length); delete[] buffer;
+    
+    buffer = new char[length];
+    fin.read(buffer, length);
+    student.name.assign(buffer, length);
+    delete[] buffer;
+    
     fin.read((char*)(&length), sizeof(length));
-    buffer = new char[length]; fin.read(buffer, length);
-    student.patronymic.assign(buffer, length); delete[] buffer;
+    
+    buffer = new char[length];
+    fin.read(buffer, length);
+    student.patronymic.assign(buffer, length);
+    delete[] buffer;
 }
 
 void TextToBinaryStudents(const std::string& textFileName, const std::string& binaryFileName)
 {
-    std::ifstream textFile(textFileName); CheckTextFile(textFile);
-    std::ofstream binaryFile(binaryFileName, std::ios::binary); CheckOutputFile(binaryFile);
+    std::ifstream textFile(textFileName);
+    CheckTextFile(textFile);
+    std::ofstream binaryFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binaryFile);
     std::string line;
     while (std::getline(textFile, line))
     {
@@ -189,21 +204,28 @@ void ReadStudentCard(std::ifstream& fin, StudentCard& studentCard)
 
 void TextToBinaryStudentsCards(const std::string& textFileName, const std::string& binaryFileName)
 {
-    std::ifstream textFile(textFileName); CheckTextFile(textFile);
-    std::ofstream binaryFile(binaryFileName, std::ios::binary); CheckOutputFile(binaryFile);
+    std::ifstream textFile(textFileName);
+    CheckTextFile(textFile);
+    std::ofstream binaryFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binaryFile);
     std::string line;
     while(std::getline(textFile,line))
     {
-        if(line.empty()) continue;
-        std::stringstream ss(line); StudentCard card; std::string token;
-        std::getline(ss, token, ';'); card.group = std::stoi(token);
-        std::getline(ss, token, ';'); card.id = std::stoi(token);
-        std::getline(ss, card.firstSubject, ';');
-        std::getline(ss, token, ';'); card.firstMark = std::stoi(token);
-        std::getline(ss, card.secondSubject, ';');
-        std::getline(ss, token, ';'); card.secondMark = std::stoi(token);
-        std::getline(ss, card.thirdSubject, ';');
-        std::getline(ss, token, ';'); card.thirdMark = std::stoi(token);
+        if(line.empty())
+        {
+            continue;
+        }
+        std::stringstream stringStream(line);
+        StudentCard card;
+        std::string token;
+        std::getline(stringStream, token, ';'); card.group = std::stoi(token);
+        std::getline(stringStream, token, ';'); card.id = std::stoi(token);
+        std::getline(stringStream, card.firstSubject, ';');
+        std::getline(stringStream, token, ';'); card.firstMark = std::stoi(token);
+        std::getline(stringStream, card.secondSubject, ';');
+        std::getline(stringStream, token, ';'); card.secondMark = std::stoi(token);
+        std::getline(stringStream, card.thirdSubject, ';');
+        std::getline(stringStream, token, ';'); card.thirdMark = std::stoi(token);
         WriteStudentCard(binaryFile, card);
     }
 }
@@ -250,8 +272,10 @@ void TaskB(Student* students, StudentCard* studentsCards, int size, const std::s
 
 void TaskBToTxt(const std::string& binFileName, const std::string& txtFileName)
 {
-    std::ifstream binFile(binFileName, std::ios::binary); CheckInputFile(binFile);
-    std::ofstream txtFile(txtFileName); CheckOutputFile(txtFile);
+    std::ifstream binFile(binFileName, std::ios::binary);
+    CheckInputFile(binFile);
+    std::ofstream txtFile(txtFileName);
+    CheckOutputFile(txtFile);
     std::string line;
     while(std::getline(binFile,line))
     {
@@ -261,7 +285,8 @@ void TaskBToTxt(const std::string& binFileName, const std::string& txtFileName)
 
 void TaskC(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
-    std::ofstream binFile(binaryFileName, std::ios::binary); CheckOutputFile(binFile);
+    std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     for (int i{}; i < size; i++)
     {
         double average = (studentsCards[i].firstMark + studentsCards[i].secondMark + studentsCards[i].thirdMark) / 3.0;
@@ -310,13 +335,13 @@ BadStudent* FillBadStudentList(const std::string& binaryFileName,const int outSi
         ++i;
     }
 
-    
     return badStudents;
 }
 
 void TaskD(Student* students, StudentCard* studentsCards, int size, const std::string& binaryFileName)
 {
-    std::ofstream binFile(binaryFileName, std::ios::binary); CheckOutputFile(binFile);
+    std::ofstream binFile(binaryFileName, std::ios::binary);
+    CheckOutputFile(binFile);
     for (int i{}; i < size; ++i)
     {
         double average{(studentsCards[i].firstMark + studentsCards[i].secondMark + studentsCards[i].thirdMark)/ 3.0};
@@ -551,3 +576,4 @@ void TaskIToTxt(const std::string& binFileName, const std::string& txtFileName)
     std::ofstream txtFile(txtFileName); CheckOutputFile(txtFile);
     std::string line; while (std::getline(binFile, line)) txtFile << line << "\n";
 }
+
